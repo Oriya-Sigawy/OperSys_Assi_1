@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -g -Wextra
 all: ex1 ex2 ex3
 ex1: ex1.c
 	$(CC) $(FLAGS) $^ -o $@
