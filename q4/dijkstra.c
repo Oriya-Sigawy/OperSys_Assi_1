@@ -37,10 +37,10 @@ void printSolution(int dist[], int size)
 void dijkstra(int **graph, int num_vs, int src)
 {
     int dist[num_vs]; // The output array.  dist[i] will hold the
-                 // shortest
+                      // shortest
     // distance from src to i
     bool sptSet[num_vs]; // sptSet[i] will be true if vertex i is
-                    // included in shortest
+                         // included in shortest
     // path tree or shortest distance from src to i is
     // finalized
 
@@ -85,7 +85,7 @@ int main()
     /* Let us create the example graph discussed above */
     size_t num_of_vers;
     int dist;
-    printf("please enter num of vertex in the graph: ");
+    printf("please enter num of vertexs in the graph: ");
     scanf("%zu", &num_of_vers);
     int **graph = (int **)malloc(num_of_vers * sizeof(int *));
     for (size_t i = 0; i < num_of_vers; i++)
@@ -100,23 +100,28 @@ int main()
             char c = getchar();
             if (dist < 0)
             {
-                printf("ERROR! dijkstra dos not soppurt negative weights!");
+                printf("ERROR! dijkstra dos not soppurt negative weights!\n");
                 return -1;
             }
             if (i == j && dist != 0)
             {
-                printf("ERROR! distance from vertex to itself must be 0");
+                printf("ERROR! distance from vertex to itself must be 0\n");
                 return -1;
             }
             if (j == num_of_vers - 1 && c != '\n')
             {
-                printf("ERROR! too many distances");
+                printf("ERROR! too many distances\n");
+                return -1;
+            }
+            if (j != num_of_vers - 1 && c == '\n')
+            {
+                printf("ERROR! too few distances\n");
                 return -1;
             }
             graph[i][j] = dist;
         }
     }
-    dijkstra(graph, num_of_vers,0);
+    dijkstra(graph, num_of_vers, 0);
 
     return 0;
 }
