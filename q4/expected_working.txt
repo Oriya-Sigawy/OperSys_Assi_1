@@ -1,0 +1,4 @@
+please enter num of vertexs in the graph: 
+Vertex 		 Distance from Source
+0 				 0
+1 				 1

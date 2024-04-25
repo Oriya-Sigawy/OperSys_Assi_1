@@ -1,0 +1,2 @@
+please enter num of vertexs in the graph: 
+ERROR! distance from vertex to itself must be 0

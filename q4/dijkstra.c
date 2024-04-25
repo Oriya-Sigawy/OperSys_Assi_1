@@ -85,7 +85,7 @@ int main()
     /* Let us create the example graph discussed above */
     size_t num_of_vers;
     int dist;
-    printf("please enter num of vertexs in the graph: ");
+    printf("please enter num of vertexs in the graph: \n");
     scanf("%zu", &num_of_vers);
     int **graph = (int **)malloc(num_of_vers * sizeof(int *));
     for (size_t i = 0; i < num_of_vers; i++)
