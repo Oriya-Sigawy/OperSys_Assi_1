@@ -78,7 +78,6 @@ void dijkstra(int **graph, int num_vs, int src)
     // print the constructed distance array
     printSolution(dist, num_vs);
 }
-
 // driver's code
 int main()
 {
@@ -123,5 +122,10 @@ int main()
     }
     dijkstra(graph, num_of_vers, 0);
 
+    for (size_t i=0; i<num_of_vers;i++)
+    {
+            free(graph[i]);
+    }
+    free(graph);
     return 0;
 }
