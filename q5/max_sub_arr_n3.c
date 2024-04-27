@@ -9,24 +9,42 @@ int max(int x, int y)
 void create_arr(int *arr, unsigned int seed, int size)
 {
     srand(seed);
-    for (size_t i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         arr[i] = rand() % 100 - 25;
     }
 }
 
+int maxSubArr(int size, int *array)
+{
+    int best = 0;
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = i; j < size; j++)
+        {
+            int sum = 0;
+            for (int k = i; k <= j; k++)
+            {
+                sum += array[k];
+            }
+            best = max(best, sum);
+        }
+    }
+    return best;
+}
+
 int main(int argc, char **argv)
 {
-    int size = argv[2] - '0';
-    int *array = (int *)malloc(size * sizeof(int));
-    unsigned int seed = argv[1] - '0';
-    create_arr(array, seed, size);
-    int best = 0, sum = 0;
-    for (size_t i = 0; i < size; i++)
+     if (argc != 3)
     {
-        sum = max(array[i], sum + array[i]);
-        best = max(best, sum);
+        printf("ERROR!\nusage: %s <seed> <size>\n", argv[0]);
+        exit(1);
     }
-    printf("the result is %d", best);
+    int size = atoi(argv[2]);
+    int *array = (int *)malloc(size * sizeof(int));
+    unsigned int seed = atoi(argv[1]);
+    create_arr(array, seed, size);
+    int best = maxSubArr(size, array);
+    printf("the result is %d\n", best);
     return 0;
 }
