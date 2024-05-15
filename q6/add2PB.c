@@ -19,6 +19,6 @@ int main(int argc, char **argv)
             args[i] = strdup(argv[i]);
         }
         args[argc] = NULL;
-        int result = execvp("echo", args);
+        execvp("echo", args);
     }
 }
