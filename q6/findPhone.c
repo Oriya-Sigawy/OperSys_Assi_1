@@ -7,6 +7,11 @@
 int main(int argc, char *argv[])
 {
 
+    if (argc < 2)
+    {
+        printf("ERROR! too few arguments\n");
+        printf("Usage: ./findPhone <name>\n");
+    }
     int pipefd1[2];
     int pipefd2[2];
 
@@ -41,7 +46,7 @@ int main(int argc, char *argv[])
         }
 
         // Execute grep command and write the result to the pipe. If the command fails, it will continue to the next line and print an error
-        execlp("grep", "grep", "Matan", "phonebook.txt", NULL);
+        execlp("grep", "grep", argv[1], "phoneBook", NULL);
 
         perror("execlp");
         exit(EXIT_FAILURE);

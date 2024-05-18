@@ -1,0 +1,135 @@
+        -:    0:Source:dijkstra.c
+        -:    0:Graph:dijkstra.gcno
+        -:    0:Data:dijkstra.gcda
+        -:    0:Runs:5
+        -:    1:// C program for Dijkstra's single source shortest path
+        -:    2:// algorithm. The program is for adjacency matrix
+        -:    3:// representation of the graph
+        -:    4:
+        -:    5:#include <limits.h>
+        -:    6:#include <stdbool.h>
+        -:    7:#include <stdio.h>
+        -:    8:#include <stdlib.h>
+        -:    9:
+        -:   10:// A utility function to find the vertex with minimum
+        -:   11:// distance value, from the set of vertices not yet included
+        -:   12:// in shortest path tree
+        1:   13:int minDistance(int dist[], int size, bool sptSet[])
+        -:   14:{
+        -:   15:    // Initialize min value
+        1:   16:    int min = INT_MAX, min_index;
+        -:   17:
+        3:   18:    for (int v = 0; v < size; v++)
+        2:   19:        if (sptSet[v] == false && dist[v] <= min)
+        1:   20:            min = dist[v], min_index = v;
+        -:   21:
+        1:   22:    return min_index;
+        -:   23:}
+        -:   24:
+        -:   25:// A utility function to print the constructed distance
+        -:   26:// array
+        1:   27:void printSolution(int dist[], int size)
+        -:   28:{
+        1:   29:    printf("Vertex \t\t Distance from Source\n");
+        3:   30:    for (int i = 0; i < size; i++)
+        2:   31:        printf("%d \t\t\t\t %d\n", i, dist[i]);
+        1:   32:}
+        -:   33:
+        -:   34:// Function that implements Dijkstra's single source
+        -:   35:// shortest path algorithm for a graph represented using
+        -:   36:// adjacency matrix representation
+        1:   37:void dijkstra(int **graph, int num_vs, int src)
+        1:   38:{
+        1:   39:    int dist[num_vs]; // The output array.  dist[i] will hold the
+        -:   40:                      // shortest
+        -:   41:    // distance from src to i
+        1:   42:    bool sptSet[num_vs]; // sptSet[i] will be true if vertex i is
+        -:   43:                         // included in shortest
+        -:   44:    // path tree or shortest distance from src to i is
+        -:   45:    // finalized
+        -:   46:
+        -:   47:    // Initialize all distances as INFINITE and stpSet[] as
+        -:   48:    // false
+        3:   49:    for (int i = 0; i < num_vs; i++)
+        2:   50:        dist[i] = INT_MAX, sptSet[i] = false;
+        -:   51:
+        -:   52:    // Distance of source vertex from itself is always 0
+        1:   53:    dist[src] = 0;
+        -:   54:
+        -:   55:    // Find shortest path for all vertices
+        2:   56:    for (int count = 0; count < num_vs - 1; count++)
+        -:   57:    {
+        -:   58:        // Pick the minimum distance vertex from the set of
+        -:   59:        // vertices not yet processed. u is always equal to
+        -:   60:        // src in the first iteration.
+        1:   61:        int u = minDistance(dist, num_vs, sptSet);
+        -:   62:
+        -:   63:        // Mark the picked vertex as processed
+        1:   64:        sptSet[u] = true;
+        -:   65:
+        -:   66:        // Update dist value of the adjacent vertices of the
+        -:   67:        // picked vertex.
+        3:   68:        for (int v = 0; v < num_vs; v++)
+        -:   69:
+        -:   70:            // Update dist[v] only if is not in sptSet,
+        -:   71:            // there is an edge from u to v, and total
+        -:   72:            // weight of path from src to  v through u is
+        -:   73:            // smaller than current value of dist[v]
+        2:   74:            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v])
+        1:   75:                dist[v] = dist[u] + graph[u][v];
+        -:   76:    }
+        -:   77:
+        -:   78:    // print the constructed distance array
+        1:   79:    printSolution(dist, num_vs);
+        1:   80:}
+        -:   81:// driver's code
+        5:   82:int main()
+        -:   83:{
+        -:   84:    /* Let us create the example graph discussed above */
+        -:   85:    size_t num_of_vers;
+        -:   86:    int dist;
+        5:   87:    printf("please enter num of vertexs in the graph: \n");
+        5:   88:    scanf("%zu", &num_of_vers);
+        5:   89:    int **graph = (int **)malloc(num_of_vers * sizeof(int *));
+       15:   90:    for (size_t i = 0; i < num_of_vers; i++)
+        -:   91:    {
+       10:   92:        graph[i] = (int *)malloc(num_of_vers * sizeof(int));
+        -:   93:    }
+        8:   94:    for (size_t i = 0; i < num_of_vers; i++)
+        -:   95:    {
+       16:   96:        for (size_t j = 0; j < num_of_vers; j++)
+        -:   97:        {
+       13:   98:            scanf("%d", &dist);
+       13:   99:            char c = getchar();
+       13:  100:            if (dist < 0)
+        -:  101:            {
+        1:  102:                printf("ERROR! dijkstra dos not soppurt negative weights!\n");
+        1:  103:                return -1;
+        -:  104:            }
+       12:  105:            if (i == j && dist != 0)
+        -:  106:            {
+        1:  107:                printf("ERROR! distance from vertex to itself must be 0\n");
+        1:  108:                return -1;
+        -:  109:            }
+       11:  110:            if (j == num_of_vers - 1 && c != '\n')
+        -:  111:            {
+        1:  112:                printf("ERROR! too many distances\n");
+        1:  113:                return -1;
+        -:  114:            }
+       10:  115:            if (j != num_of_vers - 1 && c == '\n')
+        -:  116:            {
+        1:  117:                printf("ERROR! too few distances\n");
+        1:  118:                return -1;
+        -:  119:            }
+        9:  120:            graph[i][j] = dist;
+        -:  121:        }
+        -:  122:    }
+        1:  123:    dijkstra(graph, num_of_vers, 0);
+        -:  124:
+        3:  125:    for (size_t i=0; i<num_of_vers;i++)
+        -:  126:    {
+        2:  127:            free(graph[i]);
+        -:  128:    }
+        1:  129:    free(graph);
+        1:  130:    return 0;
+        -:  131:}

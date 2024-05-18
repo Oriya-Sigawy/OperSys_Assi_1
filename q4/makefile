@@ -7,4 +7,4 @@ dijkstra: dijkstra.c
 test: test.c
 	$(CC) $(FLAGS) $^ -o $@
 clean:
-	rm -f *.o dijkstra test *.gcda *.gcno *.gcov
+	rm -f *.o dijkstra test *.gcda *.gcno
