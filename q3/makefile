@@ -2,7 +2,7 @@ cc = gcc
 flags = -Wall -g
 
 all: libpoisson.so main 
-
+.PHONY: all clean
 main : main.o libpoisson.so
 	$(cc) $(flags) main.o -L. -lpoisson -lm -o main
 

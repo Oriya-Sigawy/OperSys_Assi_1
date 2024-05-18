@@ -1,6 +1,7 @@
 CC = gcc
 FLAGS = -Wall -g -Wextra
 all: add2PB findPhone
+.PHONY: all clean
 add2PB: add2PB.c
 	$(CC) $(FLAGS) $^ -o $@
 findPhone: findPhone.c
